@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%-include('./layout/head.ejs')%>
+  </head>
+
+  <body class="signin-body">
+    <%-include('./layout/nav.ejs')%>
+
+    <section class="signin">
+      <div class="container">
+        <div class="signin-content">
+          <form
+            id="signin-form"
+            class="signin-form"
+            action="/postLogin"
+            method="POST"
+          >
+            <h2 class="form-title">Account Login</h2>
+
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-input"
+                name="email"
+                id="email"
+                placeholder="Your Email"
+                value="<%= data.email %>"
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-input"
+                name="password"
+                id="password"
+                placeholder="Password"
+                value="<%= data.password %>"
+              />
+            </div>
+            <div class="form-group form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="remember"
+                <%= (data.email && data.password) ? 'checked' : '' %>> Remember
+                me
+              </label>
+            </div>
+
+            <div class="form-group">
+              <input
+                type="submit"
+                name="submit"
+                id="submit"
+                class="form-submit"
+                value="Sign In"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

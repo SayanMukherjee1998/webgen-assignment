@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%-include('./layout/head.ejs')%>
+    <style>
+      .disabled {
+        pointer-events: none;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <%-include('./layout/nav.ejs')%>
+    <div class="container-fluid">
+      <h1 class="text-center">Welcome to dashboard page.</h1>
+      <p class="text-center">
+        you can Add Products here View them and also update and delete them...
+      </p>
+      <div class="alert alert-success">
+        <% if (message.length>0) {%> <%= message %>
+      </div>
+      <%}%>
+      <button class="btn btn-success" style="margin-bottom: 20px">
+        <a href="/addProduct" class="text-white"> Add New Product</a>
+      </button>
+
+      <div class="input-group">
+        <input
+          type="search"
+          class="form-control rounded"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="search-addon"
+        />
+        <button type="button" class="btn btn-outline-primary">search</button>
+      </div>
+      <table class="table">
+        <thead class="thead-dark text-center">
+          <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Created On</th>
+            <th scope="col">Updated On</th>
+            <th scope="col">Updated By</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <%if(productData.length > 0){%> <%for(let data of productData){%>
+          <tr>
+            <td><%= data.name%></td>
+            <td><%= data.description%></td>
+            <td><%= data.price + " ₹"%></td>
+            <td><%= data.createdAt.toLocaleDateString()%></td>
+            <td><%= data.updatedAt.toLocaleDateString()%></td>
+            <td><%= data.addByUser%></td>
+            <td>
+              <button class="btn btn-info">
+                <a href="/editProduct/<%=data._id%>" style="color: black"
+                  >Edit
+                </a>
+              </button>
+              <button class="btn btn-danger">
+                <a href="/softDelete/<%= data._id%>" style="color: white"
+                  >Delete
+                </a>
+              </button>
+            </td>
+          </tr>
+          <%}}%>
+        </tbody>
+      </table>
+
+      <!--Paginate part-->
+      <!-- <div class="d-flex justify-content-end mb-4">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link <%= !productData.hasPrevPage ? 'disabled' : '' %>" href="<%= productData.prevPage ? `?page=${productData.prevPage}` : '' %>">Previous</a></li>
+              <% if(productData.totalPages>0){ for(i=1; i<=productData.totalPages; i++){ %>
+              <li class="page-item <%= (pager == i) ? 'active' : '' %>"><a class="page-link" href="?page=<%= i %>"><%= i %></a></li>
+              <% }} %>
+             
+              <li class="page-item"><a class="page-link <%= !productData.hasNextPage ? 'disabled' : '' %>" href="<%= productData.nextPage ? `?page=${productData.nextPage}` : '' %>">Next</a></li>
+            </ul>
+          </nav>
+      </div> -->
+    </div>
+  </body>
+</html>
